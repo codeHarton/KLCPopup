@@ -139,10 +139,10 @@ const KLCPopupLayout KLCPopupLayoutCenter = { KLCPopupHorizontalLayoutCenter, KL
   if (hitView == self) {
     
     // Try to dismiss if backgroundTouch flag set.
-    if (_shouldDismissOnBackgroundTouch) {
-      [self dismiss:YES];
-    }
-    
+//    if (_shouldDismissOnBackgroundTouch) {
+//      [self dismiss:YES];
+//    }
+
     // If no mask, then return nil so touch passes through to underlying views.
     if (_maskType == KLCPopupMaskTypeNone) {
       return nil;
@@ -557,6 +557,12 @@ const KLCPopupLayout KLCPopupLayoutCenter = { KLCPopupHorizontalLayoutCenter, KL
       } else {
         _backgroundView.backgroundColor = [UIColor clearColor];
       }
+        
+        if (_shouldDismissOnBackgroundTouch) {
+            _backgroundView.userInteractionEnabled = YES;
+            UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
+            [_backgroundView addGestureRecognizer:ges];
+        }
       
       // Animate background if needed
       void (^backgroundAnimationBlock)(void) = ^(void) {
